@@ -1,0 +1,31 @@
+build/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+a.out
+investment_tracker # Your executable name
+
+# Optional editor/IDE files
+.vscode/
+*.swp
+*~
