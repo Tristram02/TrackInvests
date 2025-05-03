@@ -8,17 +8,23 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 
 find_package(CURL REQUIRED)
-
 find_package(nlohmann_json 3 REQUIRED)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+add_subdirectory(src/core)
+add_subdirectory(src/api)
+add_subdirectory(src/io)
 
 add_executable(track_invests
     src/main.cpp
-    src/core/Holding.cpp    
 )
 
-target_include_directories(track_invests PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/include
-  )
 
-target_link_libraries(track_invests PRIVATE CURL::libcurl)
-target_link_libraries(track_invests PRIVATE nlohmann_json::nlohmann_json)
+target_link_libraries(track_invests PRIVATE
+  core
+  api
+  io
+  CURL::libcurl
+  nlohmann_json::nlohmann_json
+)

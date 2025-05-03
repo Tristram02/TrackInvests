@@ -4,6 +4,10 @@ CMakeFiles/
 cmake_install.cmake
 compile_commands.json
 
+config.json
+*.key
+*credentials*
+
 # Compiled Object files
 *.slo
 *.lo
