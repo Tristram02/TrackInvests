@@ -26,11 +26,12 @@ namespace core
             void set_current_price(double price);
 
     private:
-            std::string symbol_;
-            double quantity_;
-            double purchase_price_;
-            Date purchase_date_;
-            double current_price_ = 0.0;
+        std::string id_;    
+        std::string symbol_;
+        double quantity_;
+        double purchase_price_;
+        Date purchase_date_;
+        double current_price_ = 0.0;
 
 };
 

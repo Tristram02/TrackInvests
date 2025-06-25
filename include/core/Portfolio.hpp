@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include "core/Holding.hpp"
 
 namespace core
@@ -9,7 +10,7 @@ namespace core
 class Portfolio
 {
 public:
-    Portfolio() = default;
+    Portfolio(const std::string& name);
     
     void add_holding(const Holding& holding);
     void clear();
@@ -21,7 +22,10 @@ public:
     double get_total_profit_loss() const;
     double get_total_profit_los_percent() const;
 
+    const std::string& get_name() const;
+
 private:
+    std::string name_;
     std::vector<Holding> holdings_;    
 };
 } // core

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 
 #include "io/JsonSerializer.hpp"
@@ -5,7 +7,7 @@
 
 namespace io
 {
-    class ConfigSerializer : protected JsonSerializer
+    class ConfigSerializer : public JsonSerializer
     {
     public:
         void load(const std::string& path) override;

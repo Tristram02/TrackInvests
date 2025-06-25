@@ -9,7 +9,7 @@ namespace api
 {
     AlphaVantageClient::AlphaVantageClient()
     {
-        config_ = std::make_shared<io::ConfigSerializer>();
+        config_ = std::make_unique<io::ConfigSerializer>();
         try {
             config_->load("../config.json");
             api_key_ = config_->get_key();
@@ -31,6 +31,20 @@ namespace api
         url += "&interval=5min&apikey=";
         url += api_key_;
         return parse_price_from_json(http_get(url), symbol);
+    }
+
+    std::vector<std::pair<std::string, std::string>> AlphaVantageClient::search_symbol(const std::string& keywords) const
+    {
+        auto url = std::string{"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords="};
+        url += keywords;
+        url += "&apikey=";
+        url += api_key_;
+        auto data = http_get(url);
+        std::vector<std::pair<std::string, std::string>> results;
+        for (const auto& item : data["bestMatches"]) {
+            results.emplace_back(item["1. symbol"].get<std::string>(), item["2. name"].get<std::string>());
+        }
+        return results;
     }
 
     Json AlphaVantageClient::http_get(const std::string& url) const

@@ -6,6 +6,9 @@
 
 namespace core
 {
+    Portfolio::Portfolio(const std::string& name) : name_{std::move(name)}
+    {}
+
     void Portfolio::add_holding(const Holding& holding)
     {
         holdings_.push_back(holding);
@@ -75,4 +78,9 @@ namespace core
         return (profit_loss / initial_cost) * 100.0;
     }
 
-}
+    const std::string& Portfolio::get_name() const
+    {
+        return name_;
+    }
+
+} // namespace core

@@ -3,4 +3,4 @@
 
 namespace io { class ConfigSerializer; }
 
-typedef std::shared_ptr<io::ConfigSerializer> ConfigPtr;
+typedef std::unique_ptr<io::ConfigSerializer> ConfigPtr;

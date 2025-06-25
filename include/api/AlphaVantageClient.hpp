@@ -1,10 +1,12 @@
 #pragma once
 
-#include <nlohmann/json_fwd.hpp>
 #include <string>
+
+#include <nlohmann/json_fwd.hpp>
 #include <nlohmann/json.hpp>
 
 #include "api/ApiClient.hpp"
+#include "api/fwd.hpp"
 #include "io/ConfigSerializer.hpp"
 #include "io/fwd.hpp"
 
@@ -18,6 +20,7 @@ namespace api
     public:
         AlphaVantageClient();
         double fetch_latest_price(const std::string& symbol) const override;
+        std::vector<std::pair<std::string, std::string>> search_symbol(const std::string& keywords) const;
 
     private:
         Json http_get(const std::string& url) const;
