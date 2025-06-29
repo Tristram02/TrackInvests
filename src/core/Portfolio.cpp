@@ -83,4 +83,9 @@ namespace core
         return name_;
     }
 
+    void Portfolio::set_name(const std::string& newName)
+    {
+        name_ = newName;
+    }
+
 } // namespace core

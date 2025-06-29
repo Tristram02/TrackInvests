@@ -2,29 +2,38 @@
 
 #include "api/AlphaVantageClient.hpp"
 #include "io/DataSerializer.hpp"
+#include "app/App.hpp"
 
 int main()
 {
-    auto data = std::make_unique<io::DataSerializer>();
-    data->load("../data/portfolios.json"); 
+    auto app = app::App{};
+    app.run();
 
-    for (auto& portfolio: data->get_data())
-    {
-        std::cout << "############################" << std::endl;
-        std::cout << "          Portfolio" << std::endl;
-        std::cout << "Name: " << portfolio->get_name() << std::endl;
-        std::cout << "Number of holdings: " << portfolio->get_holdings().size() << std::endl;
-        std::cout << "############################" << std::endl;
-        for (auto& holding: portfolio->get_holdings())
-        {
-            std::cout << "Symbol: " << holding.get_symbol() << std::endl;
-            std::cout << "Date: " << holding.get_purchase_date() << std::endl;
-            std::cout << "Price: " << holding.get_purchase_price() << std::endl;
-            std::cout << "Quantity: " << holding.get_quantity() << std::endl;
-            std::cout << std::endl;
-        }
-        std::cout << std::endl;
-    }
+    // auto data = std::make_unique<io::DataSerializer>();
+    // data->load("../data/portfolios.json"); 
+
+    // int portfolio_number = 1;
+    // std::string portfolio_name = "New name ";
+    // for (auto& portfolio: data->get_data())
+    // {
+    //     std::cout << "\n############################" << std::endl;
+    //     std::cout << "          Portfolio" << std::endl;
+    //     std::cout << "Name: " << portfolio->get_name() << std::endl;
+    //     std::cout << "Number of holdings: " << portfolio->get_holdings().size() << std::endl;
+    //     std::cout << "############################" << std::endl;
+    //     for (auto& holding: portfolio->get_holdings())
+    //     {
+    //         std::cout << "Symbol: " << holding.get_symbol() << std::endl;
+    //         std::cout << "Date: " << holding.get_purchase_date() << std::endl;
+    //         std::cout << "Price: " << holding.get_purchase_price() << std::endl;
+    //         std::cout << "Quantity: " << holding.get_quantity() << std::endl;
+    //         std::cout << std::endl;
+    //     }
+    //     std::cout << std::endl;
+    //     portfolio->set_name(portfolio_name + std::to_string(portfolio_number++));
+    // }
+    
+    // data->save("../data/portfolios.json");
 
     // auto alphaVantageClient = api::AlphaVantageClient();
     // std::string keyword;

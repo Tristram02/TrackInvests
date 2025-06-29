@@ -30,8 +30,6 @@ namespace io
             throw std::runtime_error("Data file does not contain information about portfolios!");
         }
 
-        std::cout << "Gdzieś tam jesteśmy" << std::endl;
-
         for (auto& portfolio : portfolio_data["portfolios"])
         {
             data_.push_back(std::make_unique<core::Portfolio>(std::string{portfolio["name"]}));
@@ -50,7 +48,37 @@ namespace io
 
     void DataSerializer::save(const std::string& path)
     {
+        auto portfolioData = Json{};
+        portfolioData["portfolios"] = Json::array();
 
+        for (const auto& portfolioPtr : data_)
+        {
+            auto portfolioJson = Json{};
+            portfolioJson["name"] = portfolioPtr->get_name();
+            portfolioJson["holdings"] = Json::array();
+
+            for (const auto& holding : portfolioPtr->get_holdings())
+            {
+                auto holdingJson = Json{};
+                holdingJson["symbol"] = holding.get_symbol();
+                holdingJson["quantity"] = holding.get_quantity();
+                holdingJson["price"] = holding.get_purchase_price();
+
+                auto dateStream = std::ostringstream{};
+                auto date = holding.get_purchase_date();
+                dateStream << std::format("{:%F}", date);
+                holdingJson["date"] = dateStream.str();
+
+                portfolioJson["holdings"].push_back(holdingJson);
+            }
+            portfolioData["portfolios"].push_back(portfolioJson);
+        }
+        auto outfile = std::ofstream{path};
+        if (!outfile.is_open())
+        {
+            throw std::runtime_error("Could not open file with given path!");
+        }
+        outfile << portfolioData.dump(4);
     }
 
     const std::vector<PortfolioPtr>& DataSerializer::get_data() const

@@ -4,6 +4,7 @@
 
 #include "api/fwd.hpp"
 #include "core/fwd.hpp"
+#include "io/fwd.hpp"
 
 namespace app
 {
@@ -16,9 +17,10 @@ namespace app
         bool load_portfolio();
         bool update_prices();
         void display_results();
+        void display_menu();
         
         AlphaVantageClientPtr client_api_;
-        PortfolioPtr portfolio_;
         std::string portfolio_path_;
+        DataSerializerPtr data_;
     };
 }

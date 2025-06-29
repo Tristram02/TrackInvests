@@ -24,6 +24,8 @@ public:
 
     const std::string& get_name() const;
 
+    void set_name(const std::string& newName);
+
 private:
     std::string name_;
     std::vector<Holding> holdings_;    
