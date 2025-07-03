@@ -88,5 +88,10 @@ namespace core
         return (get_profit_loss() / initial_cost) * 100.0;
     }
 
+    void Holding::set_current_price(double price)
+    {
+        current_price_ = price;
+    }
+
 } // core
 

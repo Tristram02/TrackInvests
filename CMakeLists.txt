@@ -16,6 +16,7 @@ add_subdirectory(src/core)
 add_subdirectory(src/api)
 add_subdirectory(src/io)
 add_subdirectory(src/app)
+add_subdirectory(src/service)
 
 add_executable(track_invests
     src/main.cpp
@@ -27,6 +28,7 @@ target_link_libraries(track_invests PRIVATE
   api
   io
   app
+  service
   CURL::libcurl
   nlohmann_json::nlohmann_json
 )

@@ -3,14 +3,24 @@
 #include "api/AlphaVantageClient.hpp"
 #include "io/DataSerializer.hpp"
 #include "app/App.hpp"
+#include "service/PortfolioValuationService.hpp"
 
 int main()
 {
     auto app = app::App{};
     app.run();
+    auto client = api::AlphaVantageClient();
+    auto data = std::make_unique<io::DataSerializer>();
+    data->load("../data/portfolios.json"); 
+    
 
-    // auto data = std::make_unique<io::DataSerializer>();
-    // data->load("../data/portfolios.json"); 
+    for (auto& portfolioPtr : data->get_data())
+    {
+        service::PortfolioValuationService::update_holdings_with_latest_prices(
+            *portfolioPtr, client);
+        std::cout << "Current value: " << portfolioPtr->get_total_current_value() << std::endl;
+    }
+
 
     // int portfolio_number = 1;
     // std::string portfolio_name = "New name ";
@@ -35,7 +45,6 @@ int main()
     
     // data->save("../data/portfolios.json");
 
-    // auto alphaVantageClient = api::AlphaVantageClient();
     // std::string keyword;
     // std::cin >> keyword;
     // std::cout << "Searching for: " << keyword << std::endl;
