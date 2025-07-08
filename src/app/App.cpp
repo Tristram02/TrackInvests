@@ -2,30 +2,25 @@
 
 #include <iostream>
 
+#include "app/ui/ManuPage.hpp"
+
 namespace app
 {
-    
-    void App::display_menu()
-    {
-        system("clear");
-        std::cout << "############################" << std::endl;
-        std::cout << "| Welcome in TrackInvests! |" << std::endl;
-        std::cout << "############################" << std::endl;
-        std::cout << "|                          |" << std::endl;
-        std::cout << "|           MENU           |" << std::endl;
-        std::cout << "|__________________________|" << std::endl;
-        std::cout << "|[1] Load wallet           |" << std::endl;
-        std::cout << "|[2] Save wallet           |" << std::endl;
-        std::cout << "|[3] Buy holding           |" << std::endl;
-        std::cout << "|[4] Sell holding          |" << std::endl;
-        std::cout << "|[5] Exit                  |" << std::endl;
-        std::cout << "|                          |" << std::endl;
-        std::cout << "############################" << std::endl;
-    }
 
     void App::run()
     {
-        display_menu();
+        currentPage_ = std::make_unique<ui::MenuPage>();
+        while(true)
+        {
+            currentPage_->render();
+            currentPage_->handle_input();
+            auto next = currentPage_->next_page();
+
+            if (next)
+            {
+                currentPage_ = std::move(next);
+            }
+        }
     }
 
 }// namespace app

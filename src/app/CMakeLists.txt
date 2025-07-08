@@ -1,5 +1,7 @@
 set(APP_SOURCES
     App.cpp
+    ui/MenuPage.cpp
+    ui/SearchSymbolPage.cpp
 )
 
 add_library(app STATIC ${APP_SOURCES})

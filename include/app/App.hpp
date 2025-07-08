@@ -1,26 +1,19 @@
 #pragma once
 
-#include <string>
+#include <memory>
 
-#include "api/fwd.hpp"
-#include "core/fwd.hpp"
-#include "io/fwd.hpp"
+#include <app/ui/IPage.hpp>
 
 namespace app
 {
-    class App
-    {
-    public:
-        void run();
-    
-    private:
-        bool load_portfolio();
-        bool update_prices();
-        void display_results();
-        void display_menu();
-        
-        AlphaVantageClientPtr client_api_;
-        std::string portfolio_path_;
-        DataSerializerPtr data_;
-    };
+
+class App
+{
+public:
+    void run();
+
+private:
+    std::unique_ptr<ui::IPage> currentPage_;
+};
+
 }
