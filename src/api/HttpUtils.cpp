@@ -50,4 +50,29 @@ namespace api
         return Json{};
     } 
 
+    std::string HttpUtils::http_get_raw(const std::string& url)
+    {
+        auto readBuffer = std::string{};
+        auto res = CURLcode{};
+        auto curl = curl_easy_init();
+
+        if (curl)
+        {
+            curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+            res = curl_easy_perform(curl);
+
+            if (res != CURLE_OK) {
+                std::string error_msg = "HTTP request failed: ";
+                error_msg += curl_easy_strerror(res);
+                throw std::runtime_error(error_msg + " for URL: " + url);
+            }
+
+            curl_easy_cleanup(curl);
+            return readBuffer;
+        }
+        return {};
+    }
+
 }

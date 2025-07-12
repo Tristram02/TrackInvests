@@ -1,6 +1,7 @@
 set(API_SOURCES
     AlphaVantageClient.cpp
     HttpUtils.cpp
+    StooqClient.cpp
 )
 
 add_library(api STATIC ${API_SOURCES})

@@ -4,7 +4,7 @@ namespace service
 {
     void PortfolioValuationService::update_holdings_with_latest_prices(
         core::Portfolio& portfolio,
-        const api::AlphaVantageClient& client)
+        const api::StooqClient& client)
     {
         for (auto& holding : portfolio.get_holdings())
         {

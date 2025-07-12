@@ -1,6 +1,6 @@
 #pragma once
 
-#include "api/AlphaVantageClient.hpp"
+#include "api/StooqClient.hpp"
 #include "core/Portfolio.hpp"
 
 namespace service
@@ -11,7 +11,7 @@ class PortfolioValuationService
 public:
     static void update_holdings_with_latest_prices(
         core::Portfolio& portfolio, 
-        const api::AlphaVantageClient& client);
+        const api::StooqClient& client);
 };
 
 }// namespace service
