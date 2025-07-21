@@ -13,6 +13,7 @@ public:
     Portfolio(const std::string& name);
     
     void add_holding(const Holding& holding);
+    void remove_holding(const std::string& id);
     void clear();
 
     const std::vector<Holding>& get_holdings() const;

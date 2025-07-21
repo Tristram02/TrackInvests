@@ -13,13 +13,14 @@
 namespace api
 {
     using Json = nlohmann::json;
+    using SymbolSearchResults = std::vector<std::pair<std::string, std::string>>;
 
     class StooqClient : public ApiClient
     {
 
     public:
         double fetch_latest_price(const std::string& symbol) const override;
-        std::vector<std::pair<std::string, std::string>> search_symbol(const std::string& keywords) const;
+        SymbolSearchResults search_symbol(const std::string& keywords) const;
 
     private:
         Json http_get(const std::string& url) const;

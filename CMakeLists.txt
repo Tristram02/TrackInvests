@@ -11,6 +11,7 @@ find_package(CURL REQUIRED)
 find_package(nlohmann_json 3 REQUIRED)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(/usr/include/boost)
 
 add_subdirectory(src/core)
 add_subdirectory(src/api)

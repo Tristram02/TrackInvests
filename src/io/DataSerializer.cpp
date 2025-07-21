@@ -7,13 +7,15 @@
 
 namespace io
 {
+    DataSerializer::~DataSerializer() {}
+
     void DataSerializer::load(const std::string& path)
     {
         auto portfolio_file = std::ifstream{path};
 
         if (!portfolio_file.is_open())
         {
-            throw std::runtime_error("Could not open config file!");
+            throw std::runtime_error("Could not open file!");
         }
 
         auto portfolio_data = Json{};
@@ -22,7 +24,7 @@ namespace io
             portfolio_data = Json::parse(portfolio_file);
         } catch (Json::parse_error& e)
         {
-            throw std::runtime_error("Failed to parse config file!");
+            throw std::runtime_error("Failed to parse file!");
         }
 
         if (!portfolio_data.contains("portfolios"))
@@ -81,7 +83,7 @@ namespace io
         outfile << portfolioData.dump(4);
     }
 
-    const std::vector<PortfolioPtr>& DataSerializer::get_data() const
+    std::vector<PortfolioPtr>& DataSerializer::get_data()
     {
         return data_;
     }

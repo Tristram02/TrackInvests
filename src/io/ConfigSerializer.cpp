@@ -36,6 +36,11 @@ namespace io
         this->api_key_ = key;
     }
 
+    void ConfigSerializer::save(const std::string& path)
+    {
+
+    }
+
     const std::string& ConfigSerializer::get_key() const
     {
         return this->api_key_;

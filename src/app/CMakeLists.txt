@@ -1,12 +1,17 @@
 set(APP_SOURCES
     App.cpp
+    ui/AddHoldingPage.cpp
+    ui/EditHoldingPage.cpp
     ui/MenuPage.cpp
+    ui/PortfolioPage.cpp
+    ui/RemoveHoldingPage.cpp
     ui/SearchSymbolPage.cpp
 )
 
 add_library(app STATIC ${APP_SOURCES})
 
-target_link_libraries(app PUBLIC 
+target_link_libraries(app PUBLIC
+    io
     core 
     api)
 

@@ -88,4 +88,12 @@ namespace core
         name_ = newName;
     }
 
+    void Portfolio::remove_holding(const std::string& id)
+    {
+        auto it = std::remove_if(holdings_.begin(), holdings_.end(), [&](const Holding& h) {
+            return h.get_id() == id;
+        });
+        holdings_.erase(it, holdings_.end());
+    }
+
 } // namespace core

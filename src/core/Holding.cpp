@@ -3,6 +3,12 @@
 #include <cmath>
 #include <limits>
 #include <stdexcept>
+#include <iomanip>
+#include <sstream>
+
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 namespace core
 {
@@ -28,6 +34,14 @@ namespace core
         {
             throw std::invalid_argument("Holding purchase price must be greater than 0");
         }
+
+        static boost::uuids::random_generator gen;
+        id_ = boost::uuids::to_string(gen());
+    }
+    
+    const std::string& Holding::get_id() const
+    {
+        return this->id_;
     }
     
     const std::string& Holding::get_symbol() const
@@ -91,6 +105,29 @@ namespace core
     void Holding::set_current_price(double price)
     {
         current_price_ = price;
+    }
+
+    void Holding::set_quantity(double quantity) {
+        quantity_ = quantity;
+    }
+
+    void Holding::set_purchase_price(double price) {
+        purchase_price_ = price;
+    }
+
+    void Holding::set_purchase_date(const Date& date) {
+        purchase_date_ = date;
+    }
+
+    std::string Holding::to_string()
+    {
+        std::ostringstream oss;
+        oss << "Symbol: " << symbol_
+            << ", Quantity: " << quantity_
+            << ", Purchase Price: " << purchase_price_
+            << ", Purchase Date: " << std::format("{:%F}", purchase_date_)
+            << ", Current Price: " << current_price_;
+        return oss.str();
     }
 
 } // core

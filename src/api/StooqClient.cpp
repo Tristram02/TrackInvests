@@ -3,6 +3,7 @@
 #include <exception>
 #include <iostream>
 #include <memory>
+#include <regex>
 #include <stdexcept>
 
 #include <api/HttpUtils.hpp>
@@ -41,5 +42,22 @@ namespace api
         } catch (const std::exception& e) {
             throw std::runtime_error("Failed to parse price!");
         }
+    }
+
+    SymbolSearchResults StooqClient::search_symbol(const std::string& keywords) const
+    {
+        auto url = std::string{"https://stooq.com/q/?s="} + keywords;
+        auto html = HttpUtils::http_get_raw(url);
+        SymbolSearchResults results;
+
+        std::regex row_regex(R"(<a href=\"/q/\?s=([^\"]+)\">([^<]+)</a>)");
+        auto begin = std::sregex_iterator(html.begin(), html.end(), row_regex);
+        auto end = std::sregex_iterator();
+        for (auto it = begin; it != end; ++it) {
+            std::string symbol = (*it)[1].str();
+            std::string name = (*it)[2].str();
+            results.emplace_back(symbol, name);
+        }
+        return results;
     }
 }

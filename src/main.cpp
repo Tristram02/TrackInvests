@@ -10,25 +10,25 @@ int main()
 {
 
     auto app = app::App{};
-    // app.run();
-    auto client = api::StooqClient();
-    auto a = client.fetch_latest_price("SWIG80TR");
-    // std::cout << "\nSWIG80TR: " << a << std::endl;
-    auto data = std::make_unique<io::DataSerializer>();
-    data->load("../data/portfolios.json"); 
+    app.run();
+    // auto client = api::StooqClient();
+    // auto a = client.fetch_latest_price("SWIG80TR");
+    // // std::cout << "\nSWIG80TR: " << a << std::endl;
+    // auto data = std::make_unique<io::DataSerializer>();
+    // data->load("../data/portfolios.json"); 
 
-    for (auto& portfolioPtr : data->get_data())
-    {
-        service::PortfolioValuationService::update_holdings_with_latest_prices(
-            *portfolioPtr, client);
+    // for (auto& portfolioPtr : data->get_data())
+    // {
+    //     service::PortfolioValuationService::update_holdings_with_latest_prices(
+    //         *portfolioPtr, client);
 
-        std::cout << "Portfolio: " << portfolioPtr->get_name() << std::endl;
-        std::cout << "  Initial cost: " << portfolioPtr->get_total_initial_cost() << std::endl;
-        std::cout << "  Current value: " << portfolioPtr->get_total_current_value() << std::endl;
-        std::cout << "  Profit/Loss: " << portfolioPtr->get_total_profit_loss() << std::endl;
-        std::cout << "  Profit/Loss (%): " << portfolioPtr->get_total_profit_los_percent() << "%" << std::endl;
-        std::cout << "-----------------------------" << std::endl;
-    }
+    //     std::cout << "Portfolio: " << portfolioPtr->get_name() << std::endl;
+    //     std::cout << "  Initial cost: " << portfolioPtr->get_total_initial_cost() << std::endl;
+    //     std::cout << "  Current value: " << portfolioPtr->get_total_current_value() << std::endl;
+    //     std::cout << "  Profit/Loss: " << portfolioPtr->get_total_profit_loss() << std::endl;
+    //     std::cout << "  Profit/Loss (%): " << portfolioPtr->get_total_profit_los_percent() << "%" << std::endl;
+    //     std::cout << "-----------------------------" << std::endl;
+    // }
 
     // auto app = app::App{};
     // app.run();

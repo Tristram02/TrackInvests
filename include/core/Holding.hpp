@@ -12,6 +12,7 @@ namespace core
             Holding(const std::string& symbol, const double& quantity, 
             const double& purchase_price, const Date& purchase_date);
 
+            const std::string& get_id() const;
             const std::string& get_symbol() const;
             double get_quantity() const;
             double get_purchase_price() const;
@@ -24,6 +25,11 @@ namespace core
             double get_profit_loss_percent() const;
 
             void set_current_price(double price);
+            void set_quantity(double quantity);
+            void set_purchase_price(double price);
+            void set_purchase_date(const Date& date);
+
+            std::string to_string();
 
     private:
         std::string id_;    
