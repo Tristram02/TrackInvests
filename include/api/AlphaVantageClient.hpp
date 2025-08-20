@@ -7,7 +7,6 @@
 
 #include "api/ApiClient.hpp"
 #include "api/fwd.hpp"
-#include "io/ConfigSerializer.hpp"
 #include "io/fwd.hpp"
 
 namespace api

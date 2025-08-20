@@ -1,6 +1,7 @@
 set(CORE_SOURCES
     Portfolio.cpp
     Holding.cpp
+    Bond.cpp
 )
 
 add_library(core STATIC ${CORE_SOURCES})

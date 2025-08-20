@@ -50,7 +50,7 @@ namespace api
         auto html = HttpUtils::http_get_raw(url);
         SymbolSearchResults results;
 
-        std::regex row_regex(R"(<a href=\"/q/\?s=([^\"]+)\">([^<]+)</a>)");
+        std::regex row_regex(R"(<a href=\"/q/\?s=([A-Za-z0-9\.\-]+)\"[^>]*>([^<]+)</a>)");
         auto begin = std::sregex_iterator(html.begin(), html.end(), row_regex);
         auto end = std::sregex_iterator();
         for (auto it = begin; it != end; ++it) {

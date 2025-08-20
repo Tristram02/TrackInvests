@@ -11,6 +11,8 @@ namespace io
 
     void DataSerializer::load(const std::string& path)
     {
+        data_.clear();
+
         auto portfolio_file = std::ifstream{path};
 
         if (!portfolio_file.is_open())

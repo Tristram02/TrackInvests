@@ -75,7 +75,7 @@ namespace app::ui
         } else {
             std::cout << "Aborted. No changes made.\n";
         }
-        next_page_ = std::make_unique<MenuPage>();
+        next_page_ = nullptr; // Do not use unique_ptr<IPage>(menu_page_)
     }
 
     std::unique_ptr<IPage> EditHoldingPage::next_page()

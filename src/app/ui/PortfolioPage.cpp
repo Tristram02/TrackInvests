@@ -2,12 +2,19 @@
 
 #include <iostream>
 
+#include <api/StooqClient.hpp>
 #include <app/ui/MenuPage.hpp>
 #include <core/Portfolio.hpp>
 #include <core/Holding.hpp>
+#include <service/PortfolioValuationService.hpp>
 
 namespace app::ui
 {
+    void PortfolioPage::createApiClient()
+    {
+        this->client_ = std::make_unique<api::StooqClient>();
+    }
+
     void PortfolioPage::set_portfolio(core::Portfolio* portfolio)
     {
         this->portfolio_ = portfolio;
@@ -15,6 +22,8 @@ namespace app::ui
 
     void PortfolioPage::render()
     {
+        createApiClient();
+        service::PortfolioValuationService::update_holdings_with_latest_prices(portfolio_, client_.get());
         system("clear");
         std::cout << "############################" << std::endl;
         std::cout << "|      Portfolio Value     |" << std::endl;
@@ -38,7 +47,9 @@ namespace app::ui
         std::cout << "[1] Back to menu\nChoice: ";
         int choice;
         std::cin >> choice;
-        next_page_ = std::make_unique<MenuPage>();
+        if (choice == 1) {
+            go_back_to_menu_ = true;
+        }
     }
 
     std::unique_ptr<IPage> PortfolioPage::next_page()

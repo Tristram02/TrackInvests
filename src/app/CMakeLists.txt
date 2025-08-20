@@ -11,9 +11,11 @@ set(APP_SOURCES
 add_library(app STATIC ${APP_SOURCES})
 
 target_link_libraries(app PUBLIC
+    api    
+    core
     io
-    core 
-    api)
+    service
+)
 
 target_include_directories(app
     PUBLIC

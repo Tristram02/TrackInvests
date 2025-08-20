@@ -5,6 +5,8 @@
 namespace app::ui
 {
 
+class MenuPage;
+
 class IPage
 {
 public:

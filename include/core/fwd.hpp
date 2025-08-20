@@ -1,12 +1,11 @@
 #pragma once
-#include <memory.h>
+
 #include <memory>
 
-namespace core 
-{ 
+namespace core {
     class Portfolio;
     class Holding;
 }
 
-typedef std::unique_ptr<core::Portfolio> PortfolioPtr;
-typedef std::unique_ptr<core::Holding> HoldingPtr;
+using PortfolioPtr = std::unique_ptr<core::Portfolio>;
+using HoldingPtr = std::unique_ptr<core::Holding>;

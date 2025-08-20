@@ -2,8 +2,10 @@
 #include <iostream>
 #include <memory>
 #include <stdexcept>
-#include "api/AlphaVantageClient.hpp"
-#include "api/HttpUtils.hpp"
+
+#include <api/AlphaVantageClient.hpp>
+#include <api/HttpUtils.hpp>
+#include <io/ConfigSerializer.hpp>
 
 namespace api 
 {

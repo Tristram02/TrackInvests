@@ -62,8 +62,8 @@ namespace app::ui
             portfolio_->add_holding(holding);
         } else {
             std::cout << "Aborted. No changes made.\n";
+            go_back_to_menu_ = true;
         }
-        next_page_ = std::make_unique<MenuPage>();
     }
 
     std::unique_ptr<IPage> AddHoldingPage::next_page()

@@ -11,8 +11,9 @@ target_include_directories(api
         ${CMAKE_SOURCE_DIR}/include
 )
 
-target_link_directories(api
+target_link_libraries(api
     PUBLIC
+        io
         core
         CURL::libcurl
         nlohmann_json::nlohmann_json

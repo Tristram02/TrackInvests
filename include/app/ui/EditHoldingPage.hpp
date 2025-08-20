@@ -17,9 +17,14 @@ public:
     std::unique_ptr<IPage> next_page() override;
 
     void set_portfolio(core::Portfolio* portfolio);
+    void set_menu_page(MenuPage* menu_page) { menu_page_ = menu_page; }
+    bool should_go_back_to_menu() const { return go_back_to_menu_; }
+    void reset_navigation_flag() { go_back_to_menu_ = false; }
 private:
     std::unique_ptr<IPage> next_page_;
     core::Portfolio* portfolio_;
+    MenuPage* menu_page_;
+    bool go_back_to_menu_ = false;
 };
 
 }

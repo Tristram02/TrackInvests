@@ -9,6 +9,8 @@
 #include <app/ui/PortfolioPage.hpp>
 #include <io/DataSerializer.hpp>
 
+
+
 namespace app::ui
 {
     void MenuPage::set_data_serializer(io::DataSerializer* data_serializer) {
@@ -43,6 +45,33 @@ namespace app::ui
         }
     }
 
+    void MenuPage::print_portfolio_names() const
+    {
+        if (!data_serializer_) return;
+        const auto& portfolios = data_serializer_->get_data();
+        std::cout << "Available portfolios:\n";
+        int idx = 1;
+        for (const auto& portfolio : portfolios) {
+            std::cout << "[" << idx++ << "] " << portfolio->get_name() << std::endl;
+        }
+    }
+
+    core::Portfolio* MenuPage::pick_portfolio() const
+    {
+        if (!data_serializer_) return nullptr;
+        const auto& portfolios = data_serializer_->get_data();
+        if (portfolios.empty()) return nullptr;
+
+        int choice = 0;
+        std::cout << "Pick portfolio number: ";
+        std::cin >> choice;
+        if (choice < 1 || choice > (int)portfolios.size()) {
+            std::cout << "Invalid choice.\n";
+            return nullptr;
+        }
+        return portfolios[choice - 1].get();
+    }
+
     void MenuPage::handle_input()
     {
         int choice;
@@ -50,18 +79,32 @@ namespace app::ui
         switch (choice)
         {
         case 1:
+        {
             if (data_serializer_) {
                 data_serializer_->load("../data/portfolios.json");
-                if (!data_serializer_->get_data().empty()) {
-                    portfolio_ = std::move(data_serializer_->get_data().front().get());
-                    std::cout << "Wallet loaded!\n";
+                auto& portfolios = data_serializer_->get_data();
+                if (!portfolios.empty()) {
+                    print_portfolio_names();
+                    core::Portfolio* selected = pick_portfolio();
+                    if (selected) {
+                        portfolio_ = selected;
+                        set_portfolio(portfolio_);
+                        std::cout << "Wallet loaded: " << portfolio_->get_name() << "\n";
+                    } else {
+                        portfolio_ = portfolios.front().get();
+                        set_portfolio(portfolio_);
+                        std::cout << "Default wallet loaded: " << portfolio_->get_name() << "\n";
+                    }
                 } else {
                     portfolio_ = nullptr;
+                    set_portfolio(nullptr);
                     std::cout << "No wallet found!\n";
                 }
             }
             break;
+        }
         case 2:
+        {
             if (data_serializer_ && portfolio_) {
                 data_serializer_->save("../data/portfolios.json");
                 std::cout << "Wallet saved!\n";
@@ -69,33 +112,27 @@ namespace app::ui
                 std::cout << "No wallet to save!\n";
             }
             break;
+        }
         case 3: {
-            auto page = std::make_unique<PortfolioPage>();
-            page->set_portfolio(portfolio_);
-            next_page_ = std::move(page);
+            show_portfolio_ = true;
             break;
         }
         case 4: {
-            auto page = std::make_unique<AddHoldingPage>();
-            page->set_portfolio(portfolio_);
-            next_page_ = std::move(page);
+            add_holding_ = true;
             break;
         }
         case 5: {
-            auto page = std::make_unique<EditHoldingPage>();
-            page->set_portfolio(portfolio_);
-            next_page_ = std::move(page);
+            edit_holding_ = true;
             break;
         }
         case 6: {
-            auto page = std::make_unique<RemoveHoldingPage>();
-            page->set_portfolio(portfolio_);
-            next_page_ = std::move(page);
+            remove_holding_ = true;
             break;
         }
-        case 7:
-            next_page_ = std::make_unique<SearchSymbolPage>();
+        case 7: {
+            search_symbol_ = true;
             break;
+        }
         case 8:
             std::exit(0);
         default:
