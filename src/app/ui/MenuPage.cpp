@@ -9,8 +9,6 @@
 #include <app/ui/PortfolioPage.hpp>
 #include <io/DataSerializer.hpp>
 
-
-
 namespace app::ui
 {
     void MenuPage::set_data_serializer(io::DataSerializer* data_serializer) {
@@ -35,7 +33,8 @@ namespace app::ui
         std::cout << "|[5] Edit holding          |" << std::endl;
         std::cout << "|[6] Remove holding        |" << std::endl;
         std::cout << "|[7] Search symbol         |" << std::endl;
-        std::cout << "|[8] Exit                  |" << std::endl;
+        std::cout << "|[8] Add bond              |" << std::endl;
+        std::cout << "|[9] Exit                  |" << std::endl;
         std::cout << "############################" << std::endl;
         std::cout << "Current Wallet: ";
         if (portfolio_) {
@@ -133,7 +132,11 @@ namespace app::ui
             search_symbol_ = true;
             break;
         }
-        case 8:
+        case 8: {
+            add_bond_ = true;
+            break;
+        }
+        case 9:
             std::exit(0);
         default:
             std::cout << "Invalid choice. Try again.\n";

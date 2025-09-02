@@ -4,6 +4,7 @@
 
 #include <app/ui/IPage.hpp>
 #include <io/DataSerializer.hpp>
+#include "app/ui/AddBondPage.hpp"
 
 namespace core { class Portfolio; }
 
@@ -25,6 +26,7 @@ public:
     bool should_edit_holding() const { return edit_holding_; }
     bool should_remove_holding() const { return remove_holding_; }
     bool should_search_symbol() const { return search_symbol_; }
+    bool should_add_bond() const { return add_bond_; }
     core::Portfolio* get_portfolio() const { return portfolio_; }
     void reset_navigation_flag() {
         show_portfolio_ = false;
@@ -38,6 +40,7 @@ public:
 
 private:
     std::unique_ptr<IPage> next_page_;
+    std::unique_ptr<AddBondPage> add_bond_page_;
     io::DataSerializer* data_serializer_;
     core::Portfolio* portfolio_;
     bool show_portfolio_ = false;
@@ -45,6 +48,7 @@ private:
     bool edit_holding_ = false;
     bool remove_holding_ = false;
     bool search_symbol_ = false;
+    bool add_bond_ = false;
 };
 
 }

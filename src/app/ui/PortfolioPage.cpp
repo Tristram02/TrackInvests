@@ -37,7 +37,13 @@ namespace app::ui
             std::cout << "----------------------------" << std::endl;
             int idx = 1;
             for (auto& holding : portfolio_->get_holdings()) {
-                std::cout << "[" << idx++ << "] " << holding.to_string() << std::endl;
+                std::cout << "[H" << idx++ << "] " << holding.to_string() << std::endl;
+            }
+            idx = 1;
+            auto now = std::chrono::system_clock::now();
+            auto today = std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(now)};
+            for (auto& bond : portfolio_->get_bonds()) {
+                std::cout << "[B" << idx++ << "] " << bond.to_string(today) << std::endl;
             }
         }
     }

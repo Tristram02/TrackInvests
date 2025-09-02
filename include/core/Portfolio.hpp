@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "core/Holding.hpp"
+#include "core/Bond.hpp"
 
 namespace core
 {
@@ -27,8 +28,14 @@ public:
 
     void set_name(const std::string& newName);
 
+    void add_bond(const Bond& bond);
+    void remove_bond(const std::string& symbol);
+    const std::vector<Bond>& get_bonds() const;
+    std::vector<Bond>& get_bonds();
+
 private:
     std::string name_;
-    std::vector<Holding> holdings_;    
+    std::vector<Holding> holdings_;
+    std::vector<Bond> bonds_;
 };
 } // core

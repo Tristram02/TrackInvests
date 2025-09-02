@@ -3,6 +3,7 @@
 #include <cmath>
 #include <limits>
 #include <numeric>
+#include <chrono>
 
 namespace core
 {
@@ -14,9 +15,15 @@ namespace core
         holdings_.push_back(holding);
     }
 
+    void Portfolio::add_bond(const Bond& bond)
+    {
+        bonds_.push_back(bond);
+    }
+
     void Portfolio::clear()
     {
         holdings_.clear();
+        bonds_.clear();
     }
 
     const std::vector<Holding>& Portfolio::get_holdings() const
@@ -29,12 +36,27 @@ namespace core
         return holdings_;
     }
 
+    const std::vector<Bond>& Portfolio::get_bonds() const
+    {
+        return bonds_;
+    }
+
+    std::vector<Bond>& Portfolio::get_bonds()
+    {
+        return bonds_;
+    }
+
     double Portfolio::get_total_initial_cost() const
     {
-        return std::accumulate(holdings_.begin(), holdings_.end(), 0.0,
+        double holding_cost = std::accumulate(holdings_.begin(), holdings_.end(), 0.0,
             [](double sum, const Holding& h) {
                 return sum + h.get_initial_cost();
             });
+        double bond_cost = std::accumulate(bonds_.begin(), bonds_.end(), 0.0,
+            [](double sum, const Bond& b) {
+                return sum + b.get_face_value() * b.get_quantity();
+            });
+        return holding_cost + bond_cost;
     }
 
     double Portfolio::get_total_current_value() const
@@ -49,6 +71,13 @@ namespace core
                 return std::numeric_limits<double>::quiet_NaN();
             }
             total_value += current_holding_value;
+        }
+
+        auto now = std::chrono::system_clock::now();
+        auto today = std::chrono::year_month_day{std::chrono::floor<std::chrono::days>(now)};
+        for (const auto& b : bonds_)
+        {
+            total_value += b.get_current_value(today);
         }
         return total_value;
     }
@@ -94,6 +123,10 @@ namespace core
             return h.get_id() == id;
         });
         holdings_.erase(it, holdings_.end());
+    }
+
+    void Portfolio::remove_bond(const std::string& symbol)
+    {
     }
 
 } // namespace core

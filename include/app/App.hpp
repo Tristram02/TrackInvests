@@ -5,6 +5,7 @@
 #include <app/ui/IPage.hpp>
 #include <app/ui/MenuPage.hpp>
 #include <app/ui/PortfolioPage.hpp>
+#include <app/ui/AddBondPage.hpp>
 #include <app/ui/AddHoldingPage.hpp>
 #include <app/ui/EditHoldingPage.hpp>
 #include <app/ui/RemoveHoldingPage.hpp>
@@ -30,6 +31,7 @@ private:
     std::unique_ptr<ui::EditHoldingPage> edit_holding_page_;
     std::unique_ptr<ui::RemoveHoldingPage> remove_holding_page_;
     std::unique_ptr<ui::SearchSymbolPage> search_symbol_page_;
+    std::unique_ptr<ui::AddBondPage> add_bond_page_;
 };
 
 }

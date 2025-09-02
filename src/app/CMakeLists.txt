@@ -6,6 +6,7 @@ set(APP_SOURCES
     ui/PortfolioPage.cpp
     ui/RemoveHoldingPage.cpp
     ui/SearchSymbolPage.cpp
+    ui/AddBondPage.cpp
 )
 
 add_library(app STATIC ${APP_SOURCES})

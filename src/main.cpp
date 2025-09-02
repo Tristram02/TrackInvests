@@ -1,16 +1,18 @@
 #include <iostream>
 
-#include "api/AlphaVantageClient.hpp"
-#include "api/StooqClient.hpp"
-#include "io/DataSerializer.hpp"
-#include "app/App.hpp"
-#include "service/PortfolioValuationService.hpp"
+#include <QApplication>
 
-int main()
+#include <gui/MainWindow.hpp>
+
+int main(int argc, char *argv[])
 {
 
-    auto app = app::App{};
-    app.run();
+    const auto app = QApplication{argc, argv};
+    auto window = gui::MainWindow();
+    window.show();
+
+    // auto app = app::App{};
+    // app.run();
     // auto client = api::StooqClient();
     // auto a = client.fetch_latest_price("SWIG80TR");
     // // std::cout << "\nSWIG80TR: " << a << std::endl;
@@ -83,5 +85,5 @@ int main()
 
     // std::string symbol = "IVV";
     // std::cout << alphaVantageClient.fetch_latest_price(symbol) << std::endl;
-    return 0;
+    return app.exec();
 }

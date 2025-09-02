@@ -19,6 +19,7 @@ namespace app
         edit_holding_page_ = std::make_unique<ui::EditHoldingPage>();
         remove_holding_page_ = std::make_unique<ui::RemoveHoldingPage>();
         search_symbol_page_ = std::make_unique<ui::SearchSymbolPage>();
+        add_bond_page_ = std::make_unique<ui::AddBondPage>();
 
         menu_page_->set_data_serializer(data_serializer_.get());
         portfolio_page_->set_menu_page(menu_page_.get());
@@ -26,6 +27,7 @@ namespace app
         edit_holding_page_->set_menu_page(menu_page_.get());
         remove_holding_page_->set_menu_page(menu_page_.get());
         search_symbol_page_->set_menu_page(menu_page_.get());
+        add_bond_page_->set_menu_page(menu_page_.get());
 
         currentPage_ = menu_page_.get();
 
@@ -65,6 +67,12 @@ namespace app
                     menu->reset_navigation_flag();
                     continue;
                 }
+                if (menu->should_add_bond()) {
+                    add_bond_page_->set_portfolio(menu->get_portfolio());
+                    currentPage_ = add_bond_page_.get();
+                    menu->reset_navigation_flag();
+                    continue;
+                }
             }
             // PortfolioPage navigation
             if (auto portfolio = dynamic_cast<ui::PortfolioPage*>(currentPage_)) {
@@ -100,6 +108,14 @@ namespace app
             }
             // SearchSymbolPage navigation
             if (auto search = dynamic_cast<ui::SearchSymbolPage*>(currentPage_)) {
+                if (search->should_go_back_to_menu()) {
+                    currentPage_ = menu_page_.get();
+                    search->reset_navigation_flag();
+                    continue;
+                }
+            }
+            // AddBondPage navigation
+            if (auto search = dynamic_cast<ui::AddBondPage*>(currentPage_)) {
                 if (search->should_go_back_to_menu()) {
                     currentPage_ = menu_page_.get();
                     search->reset_navigation_flag();

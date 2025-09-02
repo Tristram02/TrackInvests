@@ -5,17 +5,13 @@
 
 namespace core {
 
-Bond::Bond(const std::string& symbol,
-            double quantity,
-            double face_value,
+Bond::Bond(double quantity,
             double interest_rate,
             BondType type,
             const Date& issue_date,
             int years_to_maturity,
             double inflation_rate)
-    : symbol_{symbol},
-        quantity_{quantity},
-        face_value_{face_value},
+    : quantity_{quantity},
         interest_rate_{interest_rate},
         type_{type},
         issue_date_{issue_date},
@@ -23,15 +19,12 @@ Bond::Bond(const std::string& symbol,
         inflation_rate_{inflation_rate}
 {
     // Basic validation
-    if (symbol_.empty()) throw std::invalid_argument("Bond symbol cannot be empty!");
     if (quantity_ <= 0) throw std::invalid_argument("Bond quantity must be positive!");
-    if (face_value_ <= 0) throw std::invalid_argument("Bond face value must be positive!");
     if (interest_rate_ < 0) throw std::invalid_argument("Bond interest rate must be non-negative!");
     if (years_to_maturity_ <= 0) throw std::invalid_argument("Bond years to maturity must be positive!");
     if (type_ == BondType::InflationIndexed && inflation_rate_ < 0) throw std::invalid_argument("Inflation rate must be non-negative!");
 }
 
-const std::string& Bond::get_symbol() const { return symbol_; }
 double Bond::get_quantity() const { return quantity_; }
 double Bond::get_face_value() const { return face_value_; }
 double Bond::get_interest_rate() const { return interest_rate_; }
@@ -41,16 +34,15 @@ int Bond::get_years_to_maturity() const { return years_to_maturity_; }
 double Bond::get_inflation_rate() const { return inflation_rate_; }
 
 double Bond::get_current_value(const Date& current_date) const {
-    // Calculate years elapsed
-    int years_elapsed = current_date.year() - issue_date_.year();
+    int years_elapsed = (current_date.year() - issue_date_.year()).count();
     if (years_elapsed < 0) years_elapsed = 0;
     if (years_elapsed > years_to_maturity_) years_elapsed = years_to_maturity_;
     double value = 0.0;
     if (type_ == BondType::FixedRate) {
-        // TOS: simple fixed rate compound interest
+        // TOS
         value = face_value_ * std::pow(1.0 + interest_rate_, years_elapsed);
     } else {
-        // EDO: inflation-indexed compound interest
+        // EDO
         value = face_value_;
         for (int i = 0; i < years_elapsed; ++i) {
             value *= (1.0 + interest_rate_ + inflation_rate_);
@@ -61,7 +53,7 @@ double Bond::get_current_value(const Date& current_date) const {
 
 std::string Bond::to_string(const Date& current_date) const {
     std::ostringstream oss;
-    oss << "Bond: " << symbol_
+    oss << "Bond: "
         << ", Type: " << (type_ == BondType::FixedRate ? "TOS (Fixed)" : "EDO (Inflation)")
         << ", Quantity: " << quantity_
         << ", Face Value: " << face_value_

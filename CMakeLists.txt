@@ -12,7 +12,9 @@ find_package(nlohmann_json 3 REQUIRED)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(/usr/include/boost)
+find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
+add_subdirectory(src/gui)
 add_subdirectory(src/core)
 add_subdirectory(src/api)
 add_subdirectory(src/io)
@@ -23,13 +25,16 @@ add_executable(track_invests
     src/main.cpp
 )
 
-
 target_link_libraries(track_invests PRIVATE
   core
   api
   io
   app
   service
+  gui
   CURL::libcurl
   nlohmann_json::nlohmann_json
+  Qt5::Widgets
 )
+
+target_include_directories(track_invests PRIVATE include)
